@@ -3,15 +3,15 @@ import { Search } from "lucide-react";
 const Navbar = () => {
   return (
     <nav className="bg-black text-gray-200 flex justify-between items-center p-4 h-20 text-sm md:text-[15px] font-medium text-nowrap">
-      <label className="text-[#e509] text-[25px] font-bold">Moviezzz</label>
+      <label className="text-[#c74b09f3] text-[25px] font-bold">Moviezzz</label>
       <ul className="hidden xl:flex space-x-6">
-        <li className="cursor-pointer hover:text-[#e509]">Home</li>
-        <li className="cursor-pointer hover:text-[#e509]">TV Shows</li>
-        <li className="cursor-pointer hover:text-[#e509]">Movies</li>
-        <li className="cursor-pointer hover:text-[#e509]">Anime</li>
-        <li className="cursor-pointer hover:text-[#e509]">Games</li>
-        <li className="cursor-pointer hover:text-[#e509]">New & Popular</li>
-        <li className="cursor-pointer hover:text-[#e509]">Upcoming</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">Home</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">TV Shows</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">Movies</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">Anime</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">Games</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">New & Popular</li>
+        <li className="cursor-pointer hover:text-[#c74b09f3]">Upcoming</li>
       </ul>
       <div className="flex items-center space-x-4 relative">
         <div className="relative hidden md:inline-flex">
@@ -22,7 +22,7 @@ const Navbar = () => {
           />
           <Search className="absolute top-2 right-4 w-5 h-5" />
         </div>
-        <button className="bg-[#e509] px-5 py-2 text-white cursor-pointer">
+        <button className="bg-[#c74b09f3] px-5 py-2 text-white cursor-pointer">
           {" "}
           Get AI Movie Picks
         </button>
