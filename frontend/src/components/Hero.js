@@ -20,7 +20,9 @@ const Hero = () => {
   return (
     <>
       {movie ? (
+        
         <div className="text-white relative">
+          
           <img
             src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
             alt="bg-img"
