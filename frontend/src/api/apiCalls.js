@@ -27,11 +27,25 @@ export const getTopRatedMovies = async (category) => {
       `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
       getAuthHeaders()
     );
-    // console.log("auth", getAuthHeaders());
 
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.log("error from top rated", error);
+    return error;
+  }
+};
+
+// 'https://api.themoviedb.org/3/movie/movie_id?language=en-US'
+
+export const getMovie = async (movie_id) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`,
+      getAuthHeaders()
+    );
+    return response.data;
+  } catch (error) {
+    console.log("error in movie", error);
+    return error;
   }
 };
