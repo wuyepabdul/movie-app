@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Bookmark, Play } from "lucide-react";
 import { getUpcomingMovies } from "../api/apiCalls";
 import { Link } from "react-router";
@@ -6,17 +6,17 @@ import { Link } from "react-router";
 const Hero = () => {
   const [movie, setMovie] = useState(null);
 
-  const fetchAndSetHeroMovie = async () => {
+  const fetchAndSetHeroMovie = useCallback(async () => {
     const data = await getUpcomingMovies();
     if (data && data.results.length > 0) {
       const randomIndex = Math.floor(Math.random() * data.results.length);
       setMovie(data.results[randomIndex]);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAndSetHeroMovie();
-  }, []);
+  }, [fetchAndSetHeroMovie]);
 
   return (
     <>

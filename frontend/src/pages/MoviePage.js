@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getMovie } from "../api/apiCalls";
 import { useParams } from "react-router";
 import { Play } from "lucide-react";
@@ -7,14 +7,14 @@ const MoviePage = () => {
   const { id: movieId } = useParams();
   const [movie, setMovie] = useState(null);
 
-  const fetchMovie = async (id) => {
+  const fetchMovie = useCallback(async (id) => {
     const data = await getMovie(id);
-    console.log("movieId", movieId);
     setMovie(data);
-  };
+  }, []);
+
   useEffect(() => {
     fetchMovie(movieId);
-  }, [movieId]);
+  }, [movieId, fetchMovie]);
   return (
     <div>
       {movie ? (
