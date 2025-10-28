@@ -1,9 +1,12 @@
 import { Search } from "lucide-react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   return (
     <nav className="bg-black text-gray-200 flex justify-between items-center p-4 h-20 text-sm md:text-[15px] font-medium text-nowrap">
-      <label className="text-[#c74b09f3] text-[25px] font-bold">Moviezzz</label>
+      <label className="text-[#c74b09f3] text-[25px] font-bold">
+        <Link to={"/"}>Moviezzz</Link>
+      </label>
       <ul className="hidden xl:flex space-x-6">
         <li className="cursor-pointer hover:text-[#c74b09f3]">Home</li>
         <li className="cursor-pointer hover:text-[#c74b09f3]">TV Shows</li>
