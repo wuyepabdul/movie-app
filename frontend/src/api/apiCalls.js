@@ -60,3 +60,16 @@ export const getRecommendedMovies = async (movie_id) => {
     return error;
   }
 };
+
+export const getMovieVideo = async (movie_id) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movie_id}/videos?language=en-US`,
+      getAuthHeaders()
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};

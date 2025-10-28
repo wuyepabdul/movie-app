@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getMovie, getRecommendedMovies } from "../api/apiCalls";
+import { getMovie, getMovieVideo, getRecommendedMovies } from "../api/apiCalls";
 import { Link, useParams } from "react-router";
 import { Play } from "lucide-react";
 
@@ -7,10 +7,20 @@ const MoviePage = () => {
   const { id: movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
+  const [trailerKey, setTrailerKey] = useState(null);
 
   const fetchMovie = useCallback(async (id) => {
     const data = await getMovie(id);
     setMovie(data);
+  }, []);
+
+  const fetchMovieVideo = useCallback(async (id) => {
+    const data = await getMovieVideo(id);
+    const trailer = data.results?.find(
+      (vid) => vid.site === "YouTube" && vid.type === "Trailer"
+    );
+    console.log("data video", data);
+    setTrailerKey(trailer?.key || null);
   }, []);
 
   const fetchRecommendedMovies = useCallback(async (id) => {
@@ -21,7 +31,8 @@ const MoviePage = () => {
   useEffect(() => {
     fetchMovie(movieId);
     fetchRecommendedMovies(movieId);
-  }, [movieId, fetchMovie, fetchRecommendedMovies]);
+    fetchMovieVideo(movieId);
+  }, [movieId, fetchMovie, fetchRecommendedMovies, fetchMovieVideo]);
   return (
     <div>
       {movie ? (
@@ -67,10 +78,15 @@ const MoviePage = () => {
                   ))}
                 </div>
                 <p className="max-w-2xl text-gray-100">{movie.overview}</p>
-                <button className="flex justify-center items-center bg-[#c74b09f3] hover:bg-gray-700 text-white py-3 px-4 rounded-full  cursor-pointer text-sm md:text-base font-bold mt-2 md:mt-4">
-                  {" "}
-                  <Play className="mr-2 w-4 h-5 md:w-5 md:h-5" /> Watch Now
-                </button>
+                <Link
+                  to={`https://www.youtube.com/watch?v=${trailerKey}`}
+                  target="_blank"
+                >
+                  <button className="flex justify-center items-center bg-[#c74b09f3] hover:bg-gray-700 text-white py-3 px-4 rounded-full  cursor-pointer text-sm md:text-base font-bold mt-2 md:mt-4">
+                    {" "}
+                    <Play className="mr-2 w-4 h-5 md:w-5 md:h-5" /> Watch Now
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
