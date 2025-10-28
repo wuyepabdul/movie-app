@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { getMovie, getRecommendedMovies } from "../api/apiCalls";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { Play } from "lucide-react";
 
 const MoviePage = () => {
@@ -15,8 +15,7 @@ const MoviePage = () => {
 
   const fetchRecommendedMovies = useCallback(async (id) => {
     const data = await getRecommendedMovies(id);
-    console.log("recommended moveis", data);
-    setRecommendedMovies(data);
+    setRecommendedMovies(data.results || []);
   }, []);
 
   useEffect(() => {
@@ -75,6 +74,7 @@ const MoviePage = () => {
               </div>
             </div>
           </div>
+
           <div className="p-8">
             <h2 className="text-2xl font-semibold mb-4 ">Details</h2>
             <div className="bg-[#232323] rounded-lg shadow-lg p-6 flex flex-col md:flex-row gap-8">
@@ -117,7 +117,6 @@ const MoviePage = () => {
                       Production Companies:{" "}
                     </span>
                     <span className="ml-2">
-                      {console.log(movie.production_companies)}
                       {movie.production_companies &&
                       movie.production_companies.length > 0
                         ? movie.production_companies.map((company, index) => (
@@ -181,6 +180,45 @@ const MoviePage = () => {
               </div>
             </div>
           </div>
+
+          {recommendedMovies.length > 0 && (
+            <div className="p-8">
+              <h2 className="text-2xl font-semibold mb-4">
+                You might also like...
+              </h2>
+              <div className="grid  grid-cols-2 md:grid-cols-5 gap-4">
+                {recommendedMovies.slice(0, 10).map((recommendedMovie) => (
+                  <div
+                    key={recommendedMovie.id}
+                    className="bg-[#232323] rounded-lg overflow-hidden hover:scale-105 transition"
+                  >
+                    <Link to={`/movie/${recommendedMovie.id}`}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/w300${recommendedMovie.poster_path}`}
+                        alt="recommended_movie"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-2">
+                        <h3 className="text-sm font-semibold">
+                          {recommendedMovie.title}
+                        </h3>
+                        <span className="text-xs text-gray-400">
+                          {recommendedMovie.release_date?.slice(0, 4)}
+                        </span>{" "}
+                        <p>
+                          {" "}
+                          <span className="text-xs text-gray-400 ">
+                            Rating ⭐{" "}
+                            {recommendedMovie.vote_average?.toFixed(1)}{" "}
+                          </span>
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex items-center justify-center h-screen">
