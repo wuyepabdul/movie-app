@@ -29,10 +29,12 @@ const Navbar = () => {
           {" "}
           Get AI Movie Picks
         </button>
-        <button className="bg-[#333333] py-2 px-4 cursor-pointer">
-          {" "}
-          Sign In{" "}
-        </button>
+        <Link to={"/signin"}>
+          <button className="bg-[#333333] py-2 px-4 cursor-pointer">
+            {" "}
+            Sign In{" "}
+          </button>
+        </Link>
       </div>
     </nav>
   );
