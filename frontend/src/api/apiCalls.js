@@ -35,8 +35,6 @@ export const getTopRatedMovies = async (category) => {
   }
 };
 
-// 'https://api.themoviedb.org/3/movie/movie_id?language=en-US'
-
 export const getMovie = async (movie_id) => {
   try {
     const response = await axios.get(
@@ -46,6 +44,19 @@ export const getMovie = async (movie_id) => {
     return response.data;
   } catch (error) {
     console.log("error in movie", error);
+    return error;
+  }
+};
+
+export const getRecommendedMovies = async (movie_id) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movie_id}/recommendations?language=en-US&page=1`,
+      getAuthHeaders()
+    );
+    return response.data;
+  } catch (error) {
+    console.log("error in recommended", error);
     return error;
   }
 };

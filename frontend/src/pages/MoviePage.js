@@ -1,20 +1,28 @@
 import { useCallback, useEffect, useState } from "react";
-import { getMovie } from "../api/apiCalls";
+import { getMovie, getRecommendedMovies } from "../api/apiCalls";
 import { useParams } from "react-router";
 import { Play } from "lucide-react";
 
 const MoviePage = () => {
   const { id: movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
 
   const fetchMovie = useCallback(async (id) => {
     const data = await getMovie(id);
     setMovie(data);
   }, []);
 
+  const fetchRecommendedMovies = useCallback(async (id) => {
+    const data = await getRecommendedMovies(id);
+    console.log("recommended moveis", data);
+    setRecommendedMovies(data);
+  }, []);
+
   useEffect(() => {
     fetchMovie(movieId);
-  }, [movieId, fetchMovie]);
+    fetchRecommendedMovies(movieId);
+  }, [movieId, fetchMovie, fetchRecommendedMovies]);
   return (
     <div>
       {movie ? (
@@ -51,7 +59,10 @@ const MoviePage = () => {
 
                 <div className="my-2">
                   {movie.genres?.map((genre) => (
-                    <span className="bg-gray-800 px-2 mx-2 rounded-full text-sm py-1">
+                    <span
+                      key={genre.id}
+                      className="bg-gray-800 px-2 mx-2 rounded-full text-sm py-1"
+                    >
                       {genre.name}
                     </span>
                   ))}
@@ -106,11 +117,18 @@ const MoviePage = () => {
                       Production Companies:{" "}
                     </span>
                     <span className="ml-2">
+                      {console.log(movie.production_companies)}
                       {movie.production_companies &&
                       movie.production_companies.length > 0
-                        ? movie.production_companies
-                            .map((company) => company.name)
-                            .join(", ")
+                        ? movie.production_companies.map((company, index) => (
+                            <span key={company.id || index}>
+                              {company.name}
+                              {index <
+                                movie.production_companies.length - 1 && (
+                                <>, </>
+                              )}
+                            </span>
+                          ))
                         : "N/A"}{" "}
                     </span>
                   </li>
@@ -121,9 +139,15 @@ const MoviePage = () => {
                     <span className="ml-2">
                       {movie.production_countries &&
                       movie.production_countries.length > 0
-                        ? movie.production_countries
-                            .map((country) => country.name)
-                            .join(", ")
+                        ? movie.production_countries.map((country, index) => (
+                            <span key={country.id || index}>
+                              {country.name}
+                              {index <
+                                movie.production_countries.length - 1 && (
+                                <>, </>
+                              )}
+                            </span>
+                          ))
                         : "N/A"}{" "}
                     </span>
                   </li>
@@ -134,9 +158,14 @@ const MoviePage = () => {
                     <span className="ml-2">
                       {movie.spoken_languages &&
                       movie.spoken_languages.length > 0
-                        ? movie.spoken_languages
-                            .map((lang) => lang.english_name)
-                            .join(", ")
+                        ? movie.spoken_languages.map((lang, index) => (
+                            <span key={lang.id || index}>
+                              {lang.english_name}
+                              {index < movie.spoken_languages.length - 1 && (
+                                <>, </>
+                              )}
+                            </span>
+                          ))
                         : "N/A"}{" "}
                     </span>
                   </li>
