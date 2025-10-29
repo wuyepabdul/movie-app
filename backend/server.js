@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import authRoutes from "./routes/auth.routes.js";
 
 dotenv.config();
 
@@ -10,7 +11,6 @@ const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
   res.send(`Welcome to MERN Advanced Auth API at :  ${process.env.CLIENT_URL}`);
 });
-
 
 app.use(cors());
 
@@ -23,7 +23,6 @@ app.use(express.json()); // allows us to parse incoming requests from req.body
 
 app.use("/api/auth", authRoutes);
 
-
 connectDb();
 
 if (process.env.NODE_ENV !== "production") {
@@ -31,4 +30,3 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default app;
-
