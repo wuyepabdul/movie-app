@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat px-4 md:px-8 py-5"
@@ -15,14 +17,18 @@ const SignIn = () => {
 
         <form className="flex flex-col space-y-4">
           <input
-            type="username"
-            placeholder="Username"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Your Email"
             className="w-full h-[50px] bg-[#333] text-white rounded px-5 text-base"
           />
           <input
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full h-[50px] bg-[#333] text-white rounded px-5 text-base"
-            placeholder="Password"
+            placeholder="Your Password"
           />
 
           <button
