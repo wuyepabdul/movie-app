@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import { connectDb } from "./config/db.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(cors());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   console.log("Origin:", req.headers.origin);
