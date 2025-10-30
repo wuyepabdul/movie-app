@@ -14,7 +14,12 @@ app.get("/", (req, res) => {
   res.send(`Welcome to MERN Advanced Auth API at :  ${process.env.CLIENT_URL}`);
 });
 
-app.use(cors());
+const corsConfig = {
+  origin: [process.env.CLIENT_URL],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+};
+app.use(cors(corsConfig));
 app.use(cookieParser());
 
 app.use((req, res, next) => {

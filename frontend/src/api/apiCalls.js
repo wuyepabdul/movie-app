@@ -2,9 +2,7 @@ import axios from "axios";
 
 const getAuthHeaders = () => ({
   headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZTJkNzQ2M2FiNDllYmNiY2Y1M2NhYjAyMzUzNTI1YSIsIm5iZiI6MTc2MTIxNjE5Ny43NjYsInN1YiI6IjY4ZmEwNmM1NzExZDBlNGY5ZGRkOTMzOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JiotyQlMu6MXlFF5aGjOBTN3E0QdsbSTY99YA_YE2UM",
-    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.REACT_APP_API_TOKEN}`,
   },
 });
 
