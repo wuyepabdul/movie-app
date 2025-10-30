@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateToken.js";
+import jwt from "jsonwebtoken";
 
 export const signupController = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ export const signupController = async (req, res) => {
       throw new Error("All fields are required");
     }
 
-    const emailExist = await User.findOne({ email });
+    const emailExist = await User.findOne({ email }).select("-password");
     if (emailExist) {
       return res.status(400).json({ message: "User already exist." });
     }
@@ -39,7 +40,7 @@ export const signupController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const userExist = await User.findOne({ email });
+    const userExist = await User.findOne({ email }).select("-password");
     if (!userExist) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -58,6 +59,29 @@ export const loginController = async (req, res) => {
         .status(200)
         .json({ message: "Login Successful", user: userExist, success: true });
     }
+  } catch (error) {
+    console.log("error", error);
+    return res.status(500).json({ message: error.message, error: false });
+  }
+};
+
+export const fetchUserController = async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    if (!token) {
+      return res.status(401).json({ message: "No token" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) {
+      return res.status(400).json({ message: "No user found" });
+    }
+
+    res.status(200).json({user})
   } catch (error) {
     console.log("error", error);
     return res.status(500).json({ message: error.message, error: false });
