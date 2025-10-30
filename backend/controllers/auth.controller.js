@@ -43,6 +43,7 @@ export const loginController = async (req, res) => {
     if (!userExist) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+
     const isPasswordValid = await bcrypt.compareSync(
       password,
       userExist.password
@@ -52,7 +53,7 @@ export const loginController = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     if (userExist && isPasswordValid) {
-      generateTokenAndSetCookie();
+      generateTokenAndSetCookie(res, userExist._id);
       return res
         .status(200)
         .json({ message: "Login Successful", user: userExist, success: true });
