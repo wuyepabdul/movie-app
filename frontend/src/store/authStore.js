@@ -15,7 +15,8 @@ export const useAuthStore = create((set) => ({
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_API_URL}/signup`,
-        formData
+        formData,
+        { withCredentials: true }
       );
       console.log(response);
       set({ user: response.data.user, isLoading: false });
@@ -27,6 +28,31 @@ export const useAuthStore = create((set) => ({
         message: null,
       });
 
+      throw error;
+    }
+  },
+  signin: async (formData) => {
+    set({ isLoading: true, message: null, error: null });
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API_URL}/signin`,
+        formData,
+        { withCredentials: true }
+      );
+
+      const { user, message } = response;
+      set({
+        user,
+        isLoading: false,
+        message,
+      });
+
+      return { user, message };
+    } catch (error) {
+      set({
+        error: error.response.data.message || "Error logging in",
+        isLoading: false,
+      });
       throw error;
     }
   },

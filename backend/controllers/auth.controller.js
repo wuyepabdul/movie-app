@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 export const signupController = async (req, res) => {
   try {
     const { userName, email, password } = req.body;
-    console.log(userName, email, password);
     if (!userName || !email || !password) {
       throw new Error("All fields are required");
     }
