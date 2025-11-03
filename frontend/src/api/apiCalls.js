@@ -9,7 +9,7 @@ const getAuthHeaders = () => ({
 export const getUpcomingMovies = async () => {
   try {
     const response = await axios.get(
-      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+      `${process.env.REACT_APP_MOVIE_API_URL}/upcoming?language=en-US&page=1`,
       getAuthHeaders()
     );
     return response.data;
@@ -22,7 +22,7 @@ export const getUpcomingMovies = async () => {
 export const getTopRatedMovies = async (category) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
+      `${process.env.REACT_APP_MOVIE_API_URL}/${category}?language=en-US&page=1`,
       getAuthHeaders()
     );
 
@@ -36,7 +36,7 @@ export const getTopRatedMovies = async (category) => {
 export const getMovie = async (movie_id) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movie_id}?language=en-US`,
+      `${process.env.REACT_APP_MOVIE_API_URL}/${movie_id}?language=en-US`,
       getAuthHeaders()
     );
     return response.data;
@@ -49,7 +49,7 @@ export const getMovie = async (movie_id) => {
 export const getRecommendedMovies = async (movie_id) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movie_id}/recommendations?language=en-US&page=1`,
+      `${process.env.REACT_APP_MOVIE_API_URL}/${movie_id}/recommendations?language=en-US&page=1`,
       getAuthHeaders()
     );
     return response.data;
@@ -62,7 +62,7 @@ export const getRecommendedMovies = async (movie_id) => {
 export const getMovieVideo = async (movie_id) => {
   try {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movie_id}/videos?language=en-US`,
+      `${process.env.REACT_APP_MOVIE_API_URL}/${movie_id}/videos?language=en-US`,
       getAuthHeaders()
     );
     return response.data;
