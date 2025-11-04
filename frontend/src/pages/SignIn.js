@@ -43,7 +43,7 @@ const SignIn = () => {
             className="w-full h-[50px] bg-[#333] text-white rounded px-5 text-base"
             placeholder="Your Password"
           />
-
+          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             disabled={isLoading}

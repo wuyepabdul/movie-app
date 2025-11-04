@@ -18,7 +18,6 @@ export const useAuthStore = create((set) => ({
         formData,
         { withCredentials: true }
       );
-      console.log(response);
       set({ user: response.data.user, isLoading: false });
     } catch (error) {
       console.log(error.response.data.message);

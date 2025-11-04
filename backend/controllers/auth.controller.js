@@ -40,7 +40,9 @@ export const signupController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const userExist = await User.findOne({ email }).select("-password");
+
+    const userExist = await User.findOne({ email });
+
     if (!userExist) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -54,10 +56,14 @@ export const loginController = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     if (userExist && isPasswordValid) {
+      userExist.password = undefined;
+
       generateTokenAndSetCookie(res, userExist._id);
-      return res
-        .status(200)
-        .json({ message: "Login Successful", user: userExist, success: true });
+      return res.status(200).json({
+        message: "Login Successful",
+        user: userExist,
+        success: true,
+      });
     }
   } catch (error) {
     console.log("error", error);
