@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoading, signin, error } = useAuthStore();
+  const { isLoading, signIn, error } = useAuthStore();
   const navigate = useNavigate();
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signin({ email, password });
+      const { message } = await signIn({ email, password });
       navigate("/");
+      toast.success(message);
     } catch (error) {
       console.log(error);
     }

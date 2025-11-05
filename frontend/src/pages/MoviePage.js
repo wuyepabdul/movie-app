@@ -19,7 +19,6 @@ const MoviePage = () => {
     const trailer = data.results?.find(
       (vid) => vid.site === "YouTube" && vid.type === "Trailer"
     );
-    console.log("data video", data);
     setTrailerKey(trailer?.key || null);
   }, []);
 
@@ -238,7 +237,7 @@ const MoviePage = () => {
         </div>
       ) : (
         <div className="flex items-center justify-center h-screen">
-          <span className="text-xl text-[#c74b09f3]">Loading...</span>
+          <span className="text-xl text-[#c74b09f3]">Loading..</span>
         </div>
       )}
     </div>

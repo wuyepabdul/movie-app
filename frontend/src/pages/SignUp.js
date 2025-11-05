@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, isLoading, error, message } = useAuthStore();
+  const { signUp, isLoading, error, message } = useAuthStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signup({ userName, email, password });
+      await signUp({ userName, email, password });
       console.log(userName, email, password);
+      toast.success(message);
       navigate("/");
     } catch (error) {
       console.log("error signup", error);

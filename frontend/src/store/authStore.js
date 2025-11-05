@@ -10,7 +10,7 @@ export const useAuthStore = create((set) => ({
   fetchingUser: true,
 
   // functions
-  signup: async (formData) => {
+  signUp: async (formData) => {
     set({ isLoading: true, message: null });
     try {
       const response = await axios.post(
@@ -30,7 +30,7 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
-  signin: async (formData) => {
+  signIn: async (formData) => {
     set({ isLoading: true, message: null, error: null });
     try {
       const response = await axios.post(
@@ -39,7 +39,7 @@ export const useAuthStore = create((set) => ({
         { withCredentials: true }
       );
 
-      const { user, message } = response;
+      const { user, message } = response.data;
       set({
         user,
         isLoading: false,
@@ -62,12 +62,13 @@ export const useAuthStore = create((set) => ({
         `${process.env.REACT_APP_BACKEND_API_URL}/fetch-user`,
         { withCredentials: true }
       );
-      const { user } = response;
+      const { user } = response.data;
+
       set({ user, isLoading: false, fetchingUser: false });
       return user;
     } catch (error) {
       set({
-        error: error.response.data.message,
+        error: error.response.data.message || "Error fetching User",
         fetchingUser: false,
         isLoading: false,
       });

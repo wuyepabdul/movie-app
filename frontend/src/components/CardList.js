@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import cardImg1 from "../assets/plan.jpg";
-import cardImg2 from "../assets/sinners2.jpg";
-import cardImg3 from "../assets/tron.jpg";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getTopRatedMovies } from "../api/apiCalls";
 
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 
 const CardList = ({ title, category }) => {
   const [data, setData] = useState(null);
@@ -38,7 +35,6 @@ const CardList = ({ title, category }) => {
                 <p className="text-center pt-2  ">{item.original_title}</p>
               </SwiperSlide>
             ))}
-            {console.log(data)}
           </Swiper>
         </div>
       ) : (
