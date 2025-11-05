@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuthStore } from "../store/authStore";
 import toast from "react-hot-toast";
@@ -8,7 +8,6 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const { isLoading, signIn, error } = useAuthStore();
   const navigate = useNavigate();
-
 
   const handleLogin = async (e) => {
     e.preventDefault();

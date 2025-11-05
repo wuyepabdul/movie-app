@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import "swiper/css";
-import { Route, Routes } from "react-router";
+import {  Route, Routes } from "react-router";
 import MoviePage from "./pages/MoviePage";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";

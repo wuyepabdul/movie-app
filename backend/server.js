@@ -22,11 +22,6 @@ const corsConfig = {
 app.use(cors(corsConfig));
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  console.log("Origin:", req.headers.origin);
-  next();
-});
-
 app.use(express.json()); // allows us to parse incoming requests from req.body
 
 app.use("/api/auth", authRoutes);

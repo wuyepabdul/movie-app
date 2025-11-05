@@ -73,7 +73,7 @@ export const loginController = async (req, res) => {
 
 export const fetchUserController = async (req, res) => {
   try {
-    const { token } = req.cookies;
+    const token = req.cookies?.token;
     if (!token) {
       return res.status(401).json({ message: "No token" });
     }
@@ -88,7 +88,7 @@ export const fetchUserController = async (req, res) => {
       return res.status(400).json({ message: "No user found" });
     }
 
-    res.status(200).json({ user });
+    return res.status(200).json({ user });
   } catch (error) {
     console.log("error", error);
     return res.status(500).json({ message: error.message, error: false });
@@ -97,5 +97,5 @@ export const fetchUserController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
   res.clearCookie("token");
-  res.status(200).json({ message: "Logged out successfully" });
+  return res.status(200).json({ message: "Logged out successfully" });
 };

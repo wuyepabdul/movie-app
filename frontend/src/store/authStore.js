@@ -27,7 +27,6 @@ export const useAuthStore = create((set) => ({
         message: null,
       });
 
-      throw error;
     }
   },
   signIn: async (formData) => {
@@ -68,21 +67,30 @@ export const useAuthStore = create((set) => ({
       return user;
     } catch (error) {
       set({
-        error: error.response.data.message || "Error fetching User",
         fetchingUser: false,
+        error: error.response.data.message || "Error fetching user",
+        user: null,
         isLoading: false,
       });
-      throw error;
     }
   },
-  logout: async () => {
-    set({ isLoading: true, error: null });
+  logOut: async () => {
+    set({ isLoading: true, error: null, message: null });
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/logout`);
-      set({ user: null, error: null, isLoading: false });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API_URL}/logout`,
+        { withCredentials: true }
+      );
+      set({
+        user: null,
+        error: null,
+        isLoading: false,
+        message: response.data.message,
+      });
+      return response.data.message;
     } catch (error) {
       set({
-        error: error.response.data.message,
+        error: null,
         fetchingUser: false,
         isLoading: false,
       });
